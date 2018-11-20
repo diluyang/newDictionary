@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/header_background">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/nav_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/nav_icon"
+        android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nav_message"
+            android:text="以下用于单词/句子翻译"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/red"/>
+</RelativeLayout>
