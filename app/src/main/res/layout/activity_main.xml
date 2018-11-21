@@ -29,30 +29,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/sort_layout"-->
-        <!--android:visibility="gone"-->
-        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:id="@+id/sort_positive"-->
-            <!--android:text="正序"-->
-            <!--android:textSize="20sp"/>-->
-
-        <!--<Button-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:id="@+id/sort_negative"-->
-            <!--android:text="反序"-->
-            <!--android:textSize="20sp"/>-->
-
-    <!--</LinearLayout>-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh"
