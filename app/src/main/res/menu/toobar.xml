@@ -7,10 +7,6 @@
         android:title="添加"
         app:showAsAction="always"/>
 
-    <!--<item-->
-        <!--android:id="@+id/sort"-->
-        <!--android:title="排序"-->
-        <!--app:showAsAction="ifRoom"/>-->
 
     <item
         android:id="@+id/clear"
