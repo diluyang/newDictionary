@@ -2,7 +2,6 @@ package com.example.dictionary;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,13 +57,6 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
         final ViewHolder viewHolder=new ViewHolder(view);
         viewHolder.ChWView.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-////                View contentView= LayoutInflater.from(v.getContext()).inflate(R.layout.popup_layout,null);
-////                PopupWindow popupWindow=new PopupWindow(contentView,140,220);
-////                popupWindow.setFocusable(true);
-////                popupWindow.setTouchable(true);
-////                popupWindow.setOutsideTouchable(true);
-////                popupWindow.showAsDropDown(v,0,0);
-//                Log.d("顺序","PopupWindow");
 
                 //显示隐藏的控件
                 if(viewHolder.include.getVisibility()==View.GONE){
@@ -78,7 +70,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
                             alert.setTitle("将要删除这条单词");
                             alert.setMessage("是否删除");
                             alert.setCancelable(true);
-                            alert.setPositiveButton("忍痛割爱", new DialogInterface.OnClickListener() {
+                            alert.setPositiveButton("确认刪除", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     int pos=viewHolder.getLayoutPosition();
@@ -86,7 +78,7 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
                                     notifyItemRemoved(pos);
                                 }
                             });
-                            alert.setNegativeButton("还想再活五百年", new DialogInterface.OnClickListener() {
+                            alert.setNegativeButton("再想想", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     return;
@@ -120,23 +112,13 @@ public class WordAdapter extends RecyclerView.Adapter<WordAdapter.ViewHolder> {
             }
         });
 
-        //用百度翻译查阅词典中某个词的定义
-        viewHolder.EnWView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String data=viewHolder.EnWView.getText().toString();
-                Intent intent=new Intent(view.getContext(),WebActivity.class);
-                intent.putExtra("word",data);
-                view.getContext().startActivity(intent);
-            }
-        });
-//        Log.d("顺序","onCreateViewHolder");
         return viewHolder;
-    }
+   }
 
     /*
     对子项的进行赋值
      */
+
     public void onBindViewHolder(ViewHolder viewHolder, final int position){
         Word word=list.get(position);
         viewHolder.EnWView.setText(word.getEnW());
