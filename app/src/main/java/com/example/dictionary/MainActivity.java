@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -15,14 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -31,7 +27,6 @@ import java.util.Set;
 public class MainActivity extends AppCompatActivity {
     List<Word> wordList=new ArrayList<>();
     WordAdapter wordAdapter;
-    LinearLayout sortLayout;//排序专用的布局
     Word newWord;
     private SwipeRefreshLayout swipeRefresh;
     private DrawerLayout drawerLayout;
@@ -58,23 +53,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         wordAdapter=new WordAdapter(wordList);
         recyclerView.setAdapter(wordAdapter);
-//
-//        //用于排序的布局设置
-//        sortLayout=findViewById(R.id.sort_layout);
-//        Button sortPositive=findViewById(R.id.sort_positive);
-//        Button sortNegative=findViewById(R.id.sort_negative);
-//        sortPositive.setOnClickListener(this);
-//        sortNegative.setOnClickListener(this);
-//
-//        //刷新列表（没什么用）
-//        swipeRefresh=findViewById(R.id.refresh);
-//        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
-//        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                refreshWord();
-//            }
-//        });
 
         //侧滑布局
         drawerLayout=findViewById(R.id.drawer_layout);
@@ -89,11 +67,8 @@ public class MainActivity extends AppCompatActivity {
         Set<String> temp=new HashSet<>();
 //        temp.add("");
         Set<String> load_data=load.getStringSet("save_data",temp);
-//        Set<String> load_en=load.getStringSet("en",temp);
-//        Set<String> load_ch=load.getStringSet("ch",temp);
         Iterator<String> iter=load_data.iterator();
-//        Iterator<String> iter_en = load_en.iterator();
-//        Iterator<String> iter_ch = load_ch.iterator();
+
         if(iter.hasNext()){
             wordList.clear();
         }
@@ -103,56 +78,9 @@ public class MainActivity extends AppCompatActivity {
             wordList.add(word);
         }
 
-        //侧滑布局的具体内容
-        NavigationView navigationView=findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()){
-                    case R.id.en_to_ch:
-                        Intent intent1=new Intent(MainActivity.this,Translate.class);
-                        startActivity(intent1);
-                        break;
-                }
-                drawerLayout.closeDrawers();
-                return false;
-            }
-        });
-//        String load_en=load.getString("en","");
-//        String load_ch=load.getString("ch","");
-//        if(load_en.length()>0){
-//            Word getWord=new Word(load_en,load_ch);
-//            wordList.add(getWord);
-//        }
-//        Log.d("顺序","列表后");
+
     }
 
-//    /*
-//    后台刷新（没什么用）
-//     */
-//    public void refreshWord(){
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try{
-//                    Thread.sleep(1000);//等待一秒
-//                }catch (InterruptedException e){
-//                    e.printStackTrace();
-//                }
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        wordAdapter.notifyDataSetChanged();//通知recyclerview数据变更
-//                        swipeRefresh.setRefreshing(false);//停止刷新
-//                    }
-//                });
-//            }
-//        }).start();
-//    }
-//
-////    public void showLog(){
-////        Log.d("顺序","列表前方法");
-////    }
 
     /*
     退出时保存数据
@@ -161,38 +89,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
         Set<String> save = new HashSet<>();
-//        Set<String> save_en=new TreeSet<>();
-//        Set<String> save_ch=new TreeSet<>();
         for (Word word : wordList) {
-//            save_en.add(word.getEnW());
-//            save_ch.add(word.getChW());
             save.add(word.getEnW() + " " + word.getChW());
         }
         editor.putStringSet("save_data", save);
         editor.apply();
     }
-///
-//    /*
-//    点击事件
-//     */
-//    public void onClick(View v){
-//        switch (v.getId()){
-//
-//            //正序
-//            case R.id.sort_positive:
-//                Collections.sort(wordList, new SortByPositive());
-//                sortLayout.setVisibility(View.GONE);
-//                wordAdapter.notifyDataSetChanged();
-//                break;
-//
-//                //反序
-//            case R.id.sort_negative:
-//                Collections.sort(wordList,new SortByNegative());
-//                sortLayout.setVisibility(View.GONE);
-//                wordAdapter.notifyDataSetChanged();
-//                break;
-//        }
-//    }
 
     /*
     添加菜单
@@ -215,13 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent=new Intent(this,Add.class);
                 startActivityForResult(intent,1);
                 break;
-//
-//                //开启排序选单
-//            case R.id.sort:
-//                if(sortLayout.getVisibility()==View.GONE) {
-//                sortLayout.setVisibility(View.VISIBLE);
-//            }else sortLayout.setVisibility(View.GONE);
-//                break;
 
                 //清空词典
             case R.id.clear:
@@ -229,10 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 wordAdapter.notifyDataSetChanged();
                 break;
 //
-//                //打开侧滑布局
-//            case android.R.id.home:
-//                drawerLayout.openDrawer(GravityCompat.START);
-//                break;
         }
         return true;
     }
@@ -246,10 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 if(resultCode==RESULT_OK){
                     String[] returnData=data.getStringArrayExtra("return_data");
                     newWord=new Word(returnData[0],returnData[1]);
-//                    newWord.save();
                     wordList.add(newWord);
-//                    editor.putString("en",newWord.getEnW());
-//                    editor.putString("ch",newWord.getChW());
                 }
         }
     }
